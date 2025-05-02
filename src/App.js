@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import './styles/App.css'
+import React, { useEffect } from 'react';
+import './styles/App.css';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from './components/UI/Navbar/Navbar';
 import AppRouter from './components/UI/AppRouter';
 import { AuthContext } from './context';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsAuth, setIsLoading } from './store/slices/AppSlice';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
-  const [isLoading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { isAuth, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (localStorage.getItem('auth')) {
-      setIsAuth(true)
+      dispatch(setIsAuth(true));
     }
-    setLoading(false);
-  }, [])
+    dispatch(setIsLoading(false));
+  }, [dispatch]);
 
   return (
-    <AuthContext.Provider value={{
-      isAuth,
-      setIsAuth,
-      isLoading
-    }}>
-    <BrowserRouter>
-    <Navbar/>
-    <AppRouter/>
-</BrowserRouter>
-</AuthContext.Provider>
-  )
+    <AuthContext.Provider
+      value={{
+        isAuth,
+        setIsAuth: (auth) => dispatch(setIsAuth(auth)),
+        isLoading,
+      }}
+    >
+      <BrowserRouter>
+        <Navbar />
+        <AppRouter />
+      </BrowserRouter>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;
- 

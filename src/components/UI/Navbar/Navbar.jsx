@@ -45,7 +45,7 @@ const Navbar = () => {
     <NavbarWrapper>
       <MyButton onClick={logout}>Выйти</MyButton>
       <NavbarLinks>
-        <Link to='/about'>О сайте</Link>
+        <Link to='/about'>Счетчик</Link>
         <Link to='/posts'>Посты</Link>
       </NavbarLinks>
     </NavbarWrapper>
