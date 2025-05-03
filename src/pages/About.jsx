@@ -22,7 +22,7 @@ const Title = styled.h1`
 const About = () => {
   return (
     <AboutWrapper>
-      <Title>Sexy</Title>
+      <Title>Счетчик</Title>
       <Counter />
     </AboutWrapper>
   );

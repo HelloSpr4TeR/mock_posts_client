@@ -1,52 +1,81 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../../context';
 import MyButton from '../button/MyButton';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import ClockTime from '../../ClockTime';
 
-// Создаем стилизованный компонент для навбара
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);  // Начнем с небольшого сдвига вверх
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);  // В конце вернем на место
+  }
+`;
+
 const NavbarWrapper = styled.div`
   height: 50px;
   width: 100vw;
   display: flex;
   align-items: center;
   padding: 0 15px;
-  background: #ff4d4d; /* Красный фон */
+  background: #ff4d4d;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  animation: ${fadeIn} 1s ease-out forwards;  // Применяем анимацию
 `;
 
-// Стили для контейнера ссылок
 const NavbarLinks = styled.div`
   margin-left: auto;
   display: flex;
-  gap: 20px;
+  gap: 10px;
+`;
 
-  a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: #ffb3b3; /* Светло-красный при наведении */
-    }
-  }
+const ClockContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  cursor: pointer;
 `;
 
 const Navbar = () => {
   const { isAuth, setIsAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = () => {
     setIsAuth(false);
     localStorage.removeItem('auth');
   };
 
+  if (!isAuth) return null;
+
+  const pathname = location.pathname;
+  const isClockPage = pathname.startsWith('/clock');
+  const isPostsPage = pathname === '/posts';
+  const isCounterPage = pathname.startsWith('/about');
+
   return (
     <NavbarWrapper>
       <MyButton onClick={logout}>Выйти</MyButton>
+
+      {!isClockPage && (
+        <ClockContainer onClick={() => navigate('/clock')}>
+          <ClockTime />
+        </ClockContainer>
+      )}
+
       <NavbarLinks>
-        <Link to='/about'>Счетчик</Link>
-        <Link to='/posts'>Посты</Link>
+        {!isCounterPage && (
+          <MyButton onClick={() => navigate('/about')}>Счетчик</MyButton>
+        )}
+        {!isPostsPage && (
+          <MyButton onClick={() => navigate('/posts')}>Посты</MyButton>
+        )}
       </NavbarLinks>
     </NavbarWrapper>
   );
