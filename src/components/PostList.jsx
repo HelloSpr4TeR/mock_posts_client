@@ -3,7 +3,6 @@ import PostItem from "./PostItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const PostList = ({ posts, title, remove }) => {
-  // Создаём объект refs для хранения ссылок на DOM-элементы
   const nodeRefs = useRef({});
 
   if (!posts.length) {
@@ -16,13 +15,13 @@ const PostList = ({ posts, title, remove }) => {
       <TransitionGroup>
         {posts.map((post, index) => {
           if (!nodeRefs.current[post.id]) {
-            nodeRefs.current[post.id] = React.createRef(); // Создаём ref, если его ещё нет
+            nodeRefs.current[post.id] = React.createRef();
           }
 
           return (
             <CSSTransition
               key={post.id}
-              nodeRef={nodeRefs.current[post.id]} // Передаём ref
+              nodeRef={nodeRefs.current[post.id]}
               timeout={500}
               classNames="post"
             >

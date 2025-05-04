@@ -27,8 +27,10 @@ function App() {
       }}
     >
       <BrowserRouter>
-        <Navbar />
-        <AppRouter />
+      <Navbar />
+        <div className="container">
+          <AppRouter />
+        </div>
       </BrowserRouter>
     </AuthContext.Provider>
   );

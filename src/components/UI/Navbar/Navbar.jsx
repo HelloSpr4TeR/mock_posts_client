@@ -56,8 +56,9 @@ const Navbar = () => {
 
   const pathname = location.pathname;
   const isClockPage = pathname.startsWith('/clock');
-  const isPostsPage = pathname === '/posts';
-  const isCounterPage = pathname.startsWith('/about');
+  const isPostsPage = pathname === '/';
+  const isPostPage = pathname.startsWith('/posts/');
+  const isCounterPage = pathname === '/about';
 
   return (
     <NavbarWrapper>
@@ -70,11 +71,11 @@ const Navbar = () => {
       )}
 
       <NavbarLinks>
-        {!isCounterPage && (
+        {!isCounterPage && !isPostPage && (
           <MyButton onClick={() => navigate('/about')}>Счетчик</MyButton>
         )}
         {!isPostsPage && (
-          <MyButton onClick={() => navigate('/posts')}>Посты</MyButton>
+          <MyButton onClick={() => navigate('/')}>Посты</MyButton>
         )}
       </NavbarLinks>
     </NavbarWrapper>

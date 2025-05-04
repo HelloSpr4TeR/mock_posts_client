@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-// Создаем анимацию rotate с использованием keyframes
 const rotate = keyframes`
   from {
     transform: rotate(0deg) scale(1);
@@ -11,17 +10,24 @@ const rotate = keyframes`
   }
 `;
 
-// Создаем стилизованный компонент Loader
 const StyledLoader = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 3px dashed #e74c3c; /* Красный цвет для бордера */
+  border: 3px dashed #e74c3c;
   animation: ${rotate} 1s infinite linear;
+  
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
 `;
 
 const Loader = () => {
-  return <StyledLoader />;
+  return (
+    <div className="loader-container">
+      <StyledLoader />
+    </div>
+  );
 };
 
 export default Loader;

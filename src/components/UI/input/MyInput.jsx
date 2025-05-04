@@ -5,17 +5,18 @@ const StyledInput = styled.input`
   width: 100%;
   padding: 5px 15px;
   margin: 5px 0;
-  border: 1px solid #e74c3c; /* Красный бордер */
-  border-radius: 6px; /* Скругленные углы */
-  outline: none; /* Убираем обводку при фокусе */
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  outline: none;
+  font-size: 16px; /* добавлено для соответствия select */
 
   &:focus {
-    border-color: #c0392b; /* Более темный красный при фокусе */
-    box-shadow: 0 0 5px rgba(192, 57, 43, 0.5); /* Легкая тень при фокусе */
+    border-color: #c0392b;
+    box-shadow: 0 0 5px rgba(192, 57, 43, 0.5);
   }
 
   &::placeholder {
-    color: #e74c3c; /* Красный цвет для плейсхолдера */
+    color: #e74c3c;
   }
 `;
 

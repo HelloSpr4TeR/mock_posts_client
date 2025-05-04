@@ -8,7 +8,7 @@ import Posts from "../pages/Posts";
 export const privateRoutes = [
     { path: '/clock', component: Clock },
     { path: '/about', component: About },
-    { path: '/posts', component: Posts },
+    { path: '/', component: Posts },
     { path: '/posts/:id', component: PostIdPage },
   ];
   

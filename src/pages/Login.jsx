@@ -18,7 +18,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100vw;
+  width: 100%; /* заменено с 100vw */
   background: linear-gradient(135deg, rgb(255, 194, 194) 0%, hsl(0, 100.00%, 87.60%) 100%);
 `;
 
@@ -67,6 +67,12 @@ const InputWrapper = styled.div`
   ${({ isShaking }) => isShaking && css`
     animation: ${shake} 0.5s ease-in-out;
   `}
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 `;
 
 const Login = () => {
@@ -119,7 +125,9 @@ const Login = () => {
             onChange={handlePasswordChange}
           />
         </InputWrapper>
-        <MyButton>Войти</MyButton>
+        <ButtonWrapper>
+          <MyButton>Войти</MyButton>
+        </ButtonWrapper>
       </StyledForm>
     </Container>
   );
