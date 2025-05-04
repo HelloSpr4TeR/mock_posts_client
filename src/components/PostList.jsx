@@ -1,17 +1,28 @@
 import React, { useRef } from "react";
+import styled from "styled-components";
 import PostItem from "./PostItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+
+const StyledTitle = styled.h1`
+  text-align: center;
+  color: #e74c3c;
+  font-size: 2rem;
+  margin: 20px 0;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(231, 76, 60, 0.3);
+  letter-spacing: 1px;
+`;
 
 const PostList = ({ posts, title, remove }) => {
   const nodeRefs = useRef({});
 
   if (!posts.length) {
-    return <h1 style={{ textAlign: "center" }}>Посты не найдены!</h1>;
+    return <StyledTitle>Посты не найдены!</StyledTitle>;
   }
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>{title}</h1>
+      <StyledTitle>{title}</StyledTitle>
       <TransitionGroup>
         {posts.map((post, index) => {
           if (!nodeRefs.current[post.id]) {

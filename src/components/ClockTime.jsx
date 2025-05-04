@@ -10,9 +10,9 @@ const TimeWrapper = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: center;  // Вертикальное выравнивание по центру
-  justify-content: center;  // Горизонтальное выравнивание по центру
-  height: 50px;  // Устанавливаем высоту, равную высоте навбара
+  align-items: center;
+  justify-content: center;
+  height: 50px;
   min-width: 120px;
 `;
 

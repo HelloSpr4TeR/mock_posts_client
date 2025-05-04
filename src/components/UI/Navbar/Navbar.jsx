@@ -8,11 +8,11 @@ import ClockTime from '../../ClockTime';
 const fadeIn = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(-20px);  // Начнем с небольшого сдвига вверх
+    transform: translateY(-20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);  // В конце вернем на место
+    transform: translateY(0);
   }
 `;
 
@@ -24,8 +24,9 @@ const NavbarWrapper = styled.div`
   padding: 0 15px;
   background: #ff4d4d;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  animation: ${fadeIn} 1s ease-out forwards;  // Применяем анимацию
+  position: fixed;
+  animation: ${fadeIn} 1s ease-out forwards;
+  z-index: 9999;
 `;
 
 const NavbarLinks = styled.div`

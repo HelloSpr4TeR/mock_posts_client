@@ -48,7 +48,7 @@ function Posts() {
   return (
     <div className='App'>
       <MyButton style={{ marginTop: 30 }} onClick={() => dispatch(setModal(true))}>
-        Создать пользователя
+        Создать пост
       </MyButton>
 
       <MyModal visible={modal} setVisible={(val) => dispatch(setModal(val))}>
@@ -62,7 +62,7 @@ function Posts() {
       <MySelect
         value={limit}
         onChange={(val) => dispatch(setLimit(val))}
-        defaultValue='Кол-во элементов на странице'
+        defaultValue='Кол-во постов на странице'
         options={[
           { value: 5, name: '5' },
           { value: 10, name: '10' },
@@ -73,7 +73,7 @@ function Posts() {
 
       {error && <h1>Произошла ошибка: {error}</h1>}
 
-      <PostList remove={handleRemove} posts={sortedAndSearchedPosts} title='Моковые посты' />
+      <PostList remove={handleRemove} posts={sortedAndSearchedPosts} title='Посты' />
 
       <div ref={lastElement} style={{ height: 20, background: 'red' }} />
 

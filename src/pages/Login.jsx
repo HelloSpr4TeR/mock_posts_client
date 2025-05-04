@@ -18,7 +18,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100%; /* заменено с 100vw */
+  width: 100%;
   background: linear-gradient(135deg, rgb(255, 194, 194) 0%, hsl(0, 100.00%, 87.60%) 100%);
 `;
 
@@ -79,37 +79,23 @@ const Login = () => {
   const { setIsAuth } = useContext(AuthContext);
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const [isShaking, setIsShaking] = useState(false);
 
   const handleLoginChange = (event) => setLogin(event.target.value);
   const handlePasswordChange = (event) => setPassword(event.target.value);
 
-  const validateInputs = () => {
-    const loginPattern = /^[a-zA-Z0-9._%+-]+@(.*\.(ru|com))$/;
-    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]+$/;
-
-    if (!loginPattern.test(login) || !passwordPattern.test(password)) {
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 500);
-      return false;
-    }
-    return true;
-  };
-
   const loginHandler = (event) => {
     event.preventDefault();
 
-    if (validateInputs()) {
-      setIsAuth(true);
-      localStorage.setItem('auth', 'true');
-    }
+    // Упрощённая логика входа — без валидации
+    setIsAuth(true);
+    localStorage.setItem('auth', 'true');
   };
 
   return (
     <Container>
       <Heading>Добро пожаловать!</Heading>
       <StyledForm onSubmit={loginHandler}>
-        <InputWrapper isShaking={isShaking}>
+        <InputWrapper>
           <MyInput
             type="text"
             placeholder="Введите логин"
@@ -117,7 +103,7 @@ const Login = () => {
             onChange={handleLoginChange}
           />
         </InputWrapper>
-        <InputWrapper isShaking={isShaking}>
+        <InputWrapper>
           <MyInput
             type="password"
             placeholder="Введите пароль"
