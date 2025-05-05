@@ -44,6 +44,7 @@
     color: #e74c3c;
     font-weight: bold;
     margin-bottom: 10px;
+    word-break: break-word;
   }
   
   .comment__body {
