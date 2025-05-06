@@ -5,9 +5,9 @@ import MyClock from '../components/UI/MyClock/MyClock'
 const Clock = () => {
   return (
     <div>
-    <MyClock>
-    <ClockFace/>
-    </MyClock>
+      <MyClock>
+        <ClockFace />
+      </MyClock>
     </div>
   )
 }

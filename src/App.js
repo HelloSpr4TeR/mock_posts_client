@@ -28,7 +28,7 @@ function App() {
       }}
     >
       <BrowserRouter>
-      <Navbar />
+        <Navbar />
         <div className="container">
           <AppRouter />
         </div>

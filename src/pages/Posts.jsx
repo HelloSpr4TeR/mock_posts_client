@@ -11,7 +11,7 @@ import MySelect from '../components/UI/select/MySelect';
 import { useObserver } from '../hooks/useObserver';
 import { usePosts } from '../hooks/usePosts';
 import { fetchPosts, createPost, removePost, setFilter, setModal, setLimit, setPage, }
-from '../store/slices/PostsSlice';
+  from '../store/slices/PostsSlice';
 
 function Posts() {
   const dispatch = useDispatch();

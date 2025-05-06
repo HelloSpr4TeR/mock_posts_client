@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// Создаем стилизованный компонент для фона модального окна
 const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
@@ -14,7 +13,6 @@ const ModalWrapper = styled.div`
   align-items: center;
 `;
 
-// Создаем стилизованный компонент для контента модального окна
 const ModalContent = styled.div`
   padding: 25px;
   background: white;

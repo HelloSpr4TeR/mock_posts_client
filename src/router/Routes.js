@@ -6,12 +6,12 @@ import Posts from "../pages/Posts";
 
 
 export const privateRoutes = [
-    { path: '/clock', component: Clock },
-    { path: '/about', component: About },
-    { path: '/', component: Posts },
-    { path: '/posts/:id', component: PostIdPage },
-  ];
-  
-  export const publicRoutes = [
-    { path: '/login', component: Login },
-  ];  
+  { path: '/clock', component: Clock },
+  { path: '/about', component: About },
+  { path: '/', component: Posts },
+  { path: '/posts/:id', component: PostIdPage },
+];
+
+export const publicRoutes = [
+  { path: '/login', component: Login },
+];  

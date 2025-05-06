@@ -5,20 +5,20 @@ export const useObserver = (ref, canLoad, isLoading, callback) => {
     const observer = useRef();
 
     useEffect(() => {
-      if (isLoading) return;
-      if (observer.current) observer.current.disconnect();
+        if (isLoading) return;
+        if (observer.current) observer.current.disconnect();
 
-      const cb = (entries) => {
-          if (entries[0].isIntersecting && canLoad) {
-              callback();
-          }
-      };
+        const cb = (entries) => {
+            if (entries[0].isIntersecting && canLoad) {
+                callback();
+            }
+        };
 
-      observer.current = new IntersectionObserver(cb);
-      if (ref.current) {
-          observer.current.observe(ref.current);
-      }
+        observer.current = new IntersectionObserver(cb);
+        if (ref.current) {
+            observer.current.observe(ref.current);
+        }
 
-      return () => observer.current?.disconnect(); // Очистка при размонтировании
-  }, [isLoading, ref, canLoad, callback]); // Добавили все зависимости
+        return () => observer.current?.disconnect(); // Очистка при размонтировании
+    }, [isLoading, ref, canLoad, callback]); // Добавили все зависимости
 };
