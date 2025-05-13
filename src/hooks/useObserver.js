@@ -19,6 +19,6 @@ export const useObserver = (ref, canLoad, isLoading, callback) => {
             observer.current.observe(ref.current);
         }
 
-        return () => observer.current?.disconnect(); // Очистка при размонтировании
-    }, [isLoading, ref, canLoad, callback]); // Добавили все зависимости
+        return () => observer.current?.disconnect();
+    }, [isLoading, ref, canLoad, callback]);
 };
