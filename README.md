@@ -20,7 +20,7 @@
 
 ```bash
 # Клонировать репозиторий
-git clone https://github.com/your-username/mock-posts.git
+git clone https://github.com/your-username/mock-posts-client.git
 
 # Перейти в папку проекта
 cd mock-posts
