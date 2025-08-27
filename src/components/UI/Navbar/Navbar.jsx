@@ -73,7 +73,7 @@ const Navbar = () => {
 
       <NavbarLinks>
         {!isCounterPage && !isPostPage && (
-          <MyButton onClick={() => navigate('/counter')}>Счетчик</MyButton>
+          <MyButton onClick={() => navigate('/counter')}>Tracking</MyButton>
         )}
         {!isPostsPage && (
           <MyButton onClick={() => navigate('/')}>Посты</MyButton>
