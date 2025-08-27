@@ -35,7 +35,7 @@ function Posts() {
 
   useEffect(() => {
     dispatch(fetchPosts({ limit, page }));
-  }, [page, limit]);
+  }, [page, limit, dispatch]);
 
   const handleCreate = (newPost) => {
     dispatch(createPost(newPost));

@@ -10,8 +10,6 @@ const AppRouter = () => {
   const { isAuth, isLoading } = useContext(AuthContext);
   const location = useLocation();
 
-  console.log(isAuth);
-
   if (isLoading) {
     return <Loader />;
   }
