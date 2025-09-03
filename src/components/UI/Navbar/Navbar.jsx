@@ -33,6 +33,7 @@ const NavbarLinks = styled.div`
   margin-left: auto;
   display: flex;
   gap: 10px;
+  margin-right: 10px
 `;
 
 const ClockContainer = styled.div`
@@ -59,7 +60,9 @@ const Navbar = () => {
   const isClockPage = pathname.startsWith('/clock');
   const isPostsPage = pathname === '/';
   const isPostPage = pathname.startsWith('/posts/');
-  const isCounterPage = pathname === '/about';
+  const isTrackerPage = pathname === '/tracker';
+  const isTrainingPage = pathname === '/training';
+
 
   return (
     <NavbarWrapper>
@@ -72,11 +75,14 @@ const Navbar = () => {
       )}
 
       <NavbarLinks>
-        {!isCounterPage && !isPostPage && (
-          <MyButton onClick={() => navigate('/counter')}>Tracking</MyButton>
+        {!isTrackerPage && !isPostPage && (
+          <MyButton onClick={() => navigate('/tracker')}>Tracking</MyButton>
         )}
         {!isPostsPage && (
-          <MyButton onClick={() => navigate('/')}>Посты</MyButton>
+          <MyButton onClick={() => navigate('/')}>Posts</MyButton>
+        )}
+        {!isTrainingPage && (
+          <MyButton onClick={() => navigate('/training')}>Training</MyButton>
         )}
       </NavbarLinks>
     </NavbarWrapper>
