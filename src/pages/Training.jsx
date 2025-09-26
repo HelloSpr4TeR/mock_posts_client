@@ -1,39 +1,28 @@
-import React, { useEffect, useState } from "react";
-import Accordeon from "./Training/Accordeon";
+import React from 'react'
+import Training from './Training/Tree'
 
-const Training = () => {
-  const [posts, setPosts] = useState([]);
+const rootNode = {
+  id: 1,
+  name: 'Корень',
+  children: [
+    {
+      id: 2,
+      name: 'Ребенок 1',
+      children: [
+        { id: 3, name: 'Внук 1', children: [] },
+        { id: 4, name: 'Внук 2', children: [] },
+      ],
+    },
+    { id: 5, name: 'Ребенок 2', children: [] },
+  ],
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
-        if (!res.ok) {
-          throw new Error("Error");
-        }
-        const data = await res.json();
-        setPosts(data);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
-    fetchPosts();
-  }, []);
+
+const Train = () => {
 
   return (
-    <>
-      {posts.length && (
-        <Accordeon>
-          {posts.map((post) => (
-            <div key={post.id}>
-              <Accordeon.title>{post.title}</Accordeon.title>
-              <Accordeon.body>{post.body}</Accordeon.body>
-            </div>
-          ))}
-        </Accordeon>
-      )}
-    </>
-  );
-};
+    <Training tree={rootNode} />
+  )
+}
 
-export default Training;
+export default Train
