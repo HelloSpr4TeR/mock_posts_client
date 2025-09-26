@@ -30,6 +30,57 @@ const About = () => {
 
 export default About;
 
+// import React from "react";
+
+// const USERS = [
+//     {
+//         id: 1,
+//         name: "John",
+//         email: "jonnie-bonnie@gmail.com",
+//     },
+//     {
+//         id: 2,
+//         name: "Beth",
+//         email: "kiss-my-neck@yahoo.com",
+//     },
+//     {
+//         id: 3,
+//         name: "Clara",
+//         email: "sell-garage@mail.ru",
+//     },
+// ];
+
+
+// function Table({ users, hiddenFields = [] }) {
+
+//     const headUsers = Object.keys(users[0]).filter(key => !hiddenFields.includes(key))
+
+//     return (
+//         <table>
+//             <thead>
+//                 <tr>
+//                     {headUsers.map((key) => (
+//                         <th key={key}>{key}</th>
+//                     ))}
+//                 </tr>
+//             </thead>
+//             <tbody>
+//                 {users.map((user) => (
+//                     <tr key={user.id}>
+//                         {headUsers.map(item => (
+//                             <td key={item}>{user[item]}</td>
+//                         ))}
+//                     </tr>
+//                 ))}
+//             </tbody>
+//         </table>
+//     );
+// }
+
+// export default function App() {
+//     return <Table users={USERS} hiddenFields={[]} />;
+// }
+
 // import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 
 // const Counter = () => {
