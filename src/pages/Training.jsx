@@ -1,28 +1,53 @@
-import React from 'react'
-import Training from './Training/Tree'
+import axios from 'axios'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useDebounce } from '../hooks/useDebounce'
 
-const rootNode = {
-  id: 1,
-  name: 'Корень',
-  children: [
-    {
-      id: 2,
-      name: 'Ребенок 1',
-      children: [
-        { id: 3, name: 'Внук 1', children: [] },
-        { id: 4, name: 'Внук 2', children: [] },
-      ],
-    },
-    { id: 5, name: 'Ребенок 2', children: [] },
-  ],
-}
+const Training = () => {
+  const [posts, setPosts] = useState([])
+  const [error, setError] = useState(null)
+  const [load, setLoad] = useState(false)
+  const [search, setSearch] = useState('')
 
+  const debouncedSearch = useDebounce(search, 500)
 
-const Train = () => {
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoad(true)
+      try {
+        const result = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+        setPosts(result.data)
+      } catch (e) {
+        setError(e.message)
+      } finally {
+        setLoad(false)
+      }
+    }
+
+    fetchPosts()
+  }, [])
+
+  const searchedPosts = useMemo(() => {
+    return posts.filter(post => post.title.toLowerCase().includes(debouncedSearch.toLowerCase()))
+  }, [posts, debouncedSearch])
 
   return (
-    <Training tree={rootNode} />
+    <>
+      <input
+        placeholder='Поиск поста...'
+        value={search}
+        onChange={(e) => setSearch(e.target.value)} />
+      <ul>
+        {error && <div>Ошибка: {error}</div>}
+        {load && <div>Загрузка...</div>}
+        {searchedPosts.map(post => (
+          <li key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+          </li>
+        ))}
+      </ul>
+    </>
   )
 }
 
-export default Train
+export default Training
