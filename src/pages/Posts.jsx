@@ -89,3 +89,50 @@ function Posts() {
 }
 
 export default Posts;
+
+// import axios from 'axios'
+// import React, { useEffect, useState } from 'react'
+
+// const initCharacters = `https://rickandmortyapi.com/api/character`
+
+// const Training = () => {
+//   const [characters, setCharacters] = useState([])
+//   const [load, setIsLoad] = useState(false)
+//   const [error, setError] = useState(null)
+//   const [next, setNext] = useState(null)
+
+//   const fetchCharacters = async (url) => {
+//     setIsLoad(true)
+//     try {
+//       const res = await axios.get(url)
+//       console.log(res.data)
+//       setNext(res.data.info.next)
+//       setCharacters(prev => [...prev, ...res.data.results])
+//     } catch (e) {
+//       setError(e.message)
+//     } finally {
+//       setIsLoad(false)
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchCharacters(initCharacters)
+//   }, [])
+
+//   return (
+//     <div>
+//       {error && <div>Ошибка: {error}</div>}
+//       {load && <div>Загрузка...</div>}
+//       <ul>
+//         {characters.map(character => (
+//           <li key={character.id}>
+//             {character.name}
+//           </li>
+//         ))}
+//       </ul>
+//       <button onClick={() => fetchCharacters(next)} disabled={load}>Загрузить еще</button>
+//     </div>
+//   )
+// }
+
+// export default Training

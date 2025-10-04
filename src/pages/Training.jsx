@@ -1,52 +1,46 @@
 import axios from 'axios'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useDebounce } from '../hooks/useDebounce'
+import React, { useEffect, useRef, useState } from 'react'
+
+const initCharacters = `https://rickandmortyapi.com/api/character`
 
 const Training = () => {
-  const [posts, setPosts] = useState([])
+  const [characters, setCharacters] = useState([])
+  const [load, setIsLoad] = useState(false)
   const [error, setError] = useState(null)
-  const [load, setLoad] = useState(false)
-  const [search, setSearch] = useState('')
-
-  const debouncedSearch = useDebounce(search, 500)
+  const [flag, setIsFlag] = useState(false)
+  const nextRef = useRef(null)
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoad(true)
+    const fetchCharacters = async (url) => {
+      setIsLoad(true)
       try {
-        const result = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-        setPosts(result.data)
+        const res = await axios.get(url)
+        console.log(res.data)
+        nextRef.current = res.data.info.next
+        setCharacters(prev => [...prev, ...res.data.results])
       } catch (e) {
         setError(e.message)
       } finally {
-        setLoad(false)
+        setIsLoad(false)
       }
     }
 
-    fetchPosts()
-  }, [])
-
-  const searchedPosts = useMemo(() => {
-    return posts.filter(post => post.title.toLowerCase().includes(debouncedSearch.toLowerCase()))
-  }, [posts, debouncedSearch])
+    fetchCharacters(nextRef.current ? nextRef.current : initCharacters)
+  }, [flag])
 
   return (
-    <>
-      <input
-        placeholder='Поиск поста...'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)} />
+    <div>
+      {error && <div>Ошибка: {error}</div>}
+      {load && <div>Загрузка...</div>}
       <ul>
-        {error && <div>Ошибка: {error}</div>}
-        {load && <div>Загрузка...</div>}
-        {searchedPosts.map(post => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
+        {characters.map(character => (
+          <li key={character.id}>
+            {character.name}
           </li>
         ))}
       </ul>
-    </>
+      <button onClick={() => setIsFlag(prev => !prev)} disabled={load}>Загрузить еще</button>
+    </div>
   )
 }
 
