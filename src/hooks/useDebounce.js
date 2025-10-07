@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value, delay = 1000) => {
     const [debouncedSearch, setDebouncedSearch] = useState(value)
 
     useEffect(() => {
@@ -14,7 +14,6 @@ export const useDebounce = (value, delay) => {
     return debouncedSearch
 }
 
-import axios from 'axios'
 // import React, { useEffect, useMemo, useState } from 'react'
 // import { useDebounce } from '../hooks/useDebounce'
 

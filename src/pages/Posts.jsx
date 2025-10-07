@@ -92,6 +92,172 @@ export default Posts;
 
 // import axios from 'axios'
 // import React, { useEffect, useState } from 'react'
+// import { useDebounce } from '../hooks/useDebounce'
+
+// const Training = () => {
+//   const [search, setSearch] = useState('')
+//   const [results, setResults] = useState([])
+//   const [load, setIsLoad] = useState(false)
+//   const [error, setError] = useState(null)
+
+//   const debSearch = useDebounce(search, 500)
+
+
+//   const fetchResults = async () => {
+//     setIsLoad(true)
+//     try {
+//       const res = await axios.get(`https://dummyjson.com/products/search?q=${encodeURIComponent(search)}`)
+//       setResults(res.data.products)
+//     } catch (e) {
+//       setError(e.message)
+//     } finally {
+//       setIsLoad(false)
+//     }
+//   }
+
+//   useEffect(() => {
+
+//     if (!debSearch.trim()) {
+//       setResults([])
+//       return
+//     }
+
+//     fetchResults()
+
+//   }, [debSearch])
+
+//   return (
+//     <div>
+//       <input
+//         onChange={({ target: { value } }) => setSearch(value)}
+//         type='text'
+//         placeholder='Поиск'
+//         value={search}
+//       />
+//       {error && <div>Ошибка</div>}
+//       {load && <div>Загрузка...</div>}
+//       {!!results.length && (
+//         <ul>
+//           {results.map(({ id, title }) => (
+//             <li key={id}>{title}</li>
+//           ))}
+//         </ul>
+//       )}
+//     </div>
+//   )
+// }
+
+// export default Training
+
+// import axios from 'axios'
+// import React, { useEffect, useRef, useState } from 'react'
+
+// const Training = () => {
+//   const [search, setSearch] = useState('')
+//   const [results, setResults] = useState([])
+//   const [load, setIsLoad] = useState(false)
+//   const [error, setError] = useState(null)
+//   const timerRef = useRef(undefined)
+
+
+//   const fetchResults = async () => {
+//     setIsLoad(true)
+//     try {
+//       const res = await axios.get(`https://dummyjson.com/products/search?q=${encodeURIComponent(search)}`)
+//       setResults(res.data.products)
+//     } catch (e) {
+//       setError(e.message)
+//     } finally {
+//       setIsLoad(false)
+//     }
+//   }
+
+//   useEffect(() => {
+
+//     if (!search.trim()) {
+//       setResults([])
+//       return
+//     }
+//     const id = setTimeout(() => {
+//       fetchResults()
+//     }, 1000)
+
+//     timerRef.current = id
+
+//     return () => clearTimeout(timerRef.current)
+//   }, [search])
+
+//   return (
+//     <div>
+//       <input
+//         onChange={({ target: { value } }) => setSearch(value)}
+//         type='text'
+//         placeholder='Поиск'
+//         value={search}
+//       />
+//       {error && <div>Ошибка</div>}
+//       {load && <div>Загрузка...</div>}
+//       {!!results.length && (
+//         <ul>
+//           {results.map(({ id, title }) => (
+//             <li key={id}>{title}</li>
+//           ))}
+//         </ul>
+//       )}
+//     </div>
+//   )
+// }
+
+// export default Training
+
+// import React, { useEffect, useRef, useState } from 'react'
+
+// const initCharacters = `https://rickandmortyapi.com/api/character`
+
+// const Training = () => {
+//   const [characters, setCharacters] = useState([])
+//   const [load, setIsLoad] = useState(false)
+//   const [error, setError] = useState(null)
+//   const nextRef = useRef(undefined)
+
+//   const fetchCharacters = async (url = initCharacters) => {
+//     setIsLoad(true)
+//     try {
+//       const res = await axios.get(url)
+//       console.log(res.data)
+//       nextRef.current = res.data.info.next
+//       setCharacters(prev => [...prev, ...res.data.results])
+//     } catch (e) {
+//       setError(e.message)
+//     } finally {
+//       setIsLoad(false)
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchCharacters(initCharacters)
+//   }, [])
+
+//   return (
+//     <div>
+//       {error && <div>Ошибка: {error}</div>}
+//       {load && <div>Загрузка...</div>}
+//       <ul>
+//         {characters.map(character => (
+//           <li key={character.id}>
+//             {character.name}
+//           </li>
+//         ))}
+//       </ul>
+//       <button onClick={() => fetchCharacters(nextRef.current)} disabled={load}>Загрузить еще</button>
+//     </div>
+//   )
+// }
+
+// export default Training
+
+// import axios from 'axios'
+// import React, { useEffect, useState } from 'react'
 
 // const initCharacters = `https://rickandmortyapi.com/api/character`
 
