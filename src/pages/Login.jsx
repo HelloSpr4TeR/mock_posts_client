@@ -86,7 +86,6 @@ const Login = () => {
   const loginHandler = (event) => {
     event.preventDefault();
 
-    // Упрощённая логика входа — без валидации
     setIsAuth(true);
     localStorage.setItem('auth', 'true');
   };
@@ -120,3 +119,20 @@ const Login = () => {
 };
 
 export default Login;
+
+// import React, { useRef, useState } from 'react'
+
+// const Training = () => {
+//   const [countToShow, setCountToShow] = useState(0)
+//   const countRef = useRef(0)
+
+//   return (
+//     <>
+//       <div>{countToShow}</div>
+//       <button onClick={() => countRef.current++}>add count</button>
+//       <button onClick={() => setCountToShow(countRef.current)}>update count</button>
+//     </>
+//   )
+// }
+
+// export default Training
