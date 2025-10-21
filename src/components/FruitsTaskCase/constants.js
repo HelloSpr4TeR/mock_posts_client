@@ -5,6 +5,9 @@ export const PRODUCTS = [
     { name: "bread", price: 50, count: 50 },
     { name: "milk", price: 60, count: 60 },
     { name: "eggs", price: 70, count: 70 },
+    { name: "apple", price: 40, count: 40 },
+    { name: "apple", price: 20, count: 15 },
+    { name: "bread", price: 35, count: 10 },
 ];
 
 export const FRUITS = ["apple", "banana", "orange"]

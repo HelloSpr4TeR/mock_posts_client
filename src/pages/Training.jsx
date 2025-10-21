@@ -6,11 +6,29 @@ import '../components/FruitsTaskCase/fruits.css'
 export default function Training() {
   const [isChecked, setIsChecked] = useState(false)
 
-  const fruits = useMemo(() => {
-    return PRODUCTS.filter(product => FRUITS.includes(product.name))
-  }, [])
+  const uniqueProd = useMemo(() => {
+    const map = new Map()
 
-  const countPrice = (!isChecked ? PRODUCTS : fruits).reduce((acc, { count, price }) => {
+    for (const item of PRODUCTS) {
+      if (!map.has(item.name)) {
+        map.set(item.name, item)
+      } else {
+        map.set(item.name, {
+          ...map.get(item.name),
+          price: map.get(item.name).price + item.price,
+          count: map.get(item.name).count + item.count
+        })
+      }
+    }
+
+    return Array.from(map.values())
+  }, [PRODUCTS])
+
+  const fruits = uniqueProd.filter(product => FRUITS.includes(product.name))
+
+  const productsArr = !isChecked ? uniqueProd : fruits
+
+  const countPrice = productsArr.reduce((acc, { count, price }) => {
     acc.count += count
     acc.price += price
     return acc
@@ -40,8 +58,8 @@ export default function Training() {
       </div>
       <div>Список продуктов:</div>
       <div className="cart-wrapper">
-        {(!isChecked ? PRODUCTS : fruits).map(product => (
-          <Cart key={product.name}
+        {productsArr.map((product, idx) => (
+          <Cart key={idx}
             name={product.name}
             price={product.price}
             count={product.count} />
