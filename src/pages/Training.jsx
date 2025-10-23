@@ -1,70 +1,73 @@
-import React, { useMemo, useState } from "react";
-import { Cart } from "../components/FruitsTaskCase/Cart";
-import { FRUITS, PRODUCTS } from "../components/FruitsTaskCase/constants";
-import '../components/FruitsTaskCase/fruits.css'
+import React, { useRef, useState } from 'react'
 
-export default function Training() {
-  const [isChecked, setIsChecked] = useState(false)
 
-  const uniqueProd = useMemo(() => {
-    const map = new Map()
+const Training = () => {
+  const refText = useRef(null)
+  const editRef = useRef(null)
+  const [addText, setAddText] = useState([])
 
-    for (const item of PRODUCTS) {
-      if (!map.has(item.name)) {
-        map.set(item.name, item)
+  const addNewText = () => {
+    setAddText(prev => [{
+      id: Date.now(),
+      text: refText.current.value,
+      edit: false,
+      dis: false
+    }, ...prev])
+    setTimeout(() => { refText.current.value = '' })
+  }
+
+  const deleteText = (id) => {
+    setAddText(prev => prev.filter(item => {
+      return item.id !== id
+    }))
+  }
+
+  const editText = (id) => {
+    setAddText(prev => prev.map(item => {
+      if (item.id === id) {
+        item.text = editRef.current.value
+        editRef.current.value = ''
+        item.edit = !item.edit
       } else {
-        map.set(item.name, {
-          ...map.get(item.name),
-          price: map.get(item.name).price + item.price,
-          count: map.get(item.name).count + item.count
-        })
+        item.dis = !item.dis
       }
-    }
+      return item
+    }))
+  }
 
-    return Array.from(map.values())
-  }, [PRODUCTS])
-
-  const fruits = uniqueProd.filter(product => FRUITS.includes(product.name))
-
-  const productsArr = !isChecked ? uniqueProd : fruits
-
-  const countPrice = productsArr.reduce((acc, { count, price }) => {
-    acc.count += count
-    acc.price += price
-    return acc
-  }, { count: 0, price: 0 })
+  const editFlag = (id) => {
+    setAddText(prev => prev.map((item => {
+      if (item.id === id) {
+        item.edit = !item.edit
+      } else {
+        item.dis = !item.dis
+      }
+      return item
+    })))
+  }
 
   return (
-    <div className="wrapper">
-      <div>
-        <label style={{ cursor: 'pointer' }}>
-          <input
-            style={{ display: "none" }}
-            type="checkbox"
-            id="isFruit"
-            checked={isChecked}
-            onChange={(e) => setIsChecked(e.target.checked)} />
-          {!isChecked ? <span>
-            Показывать только фрукты
-          </span> :
-            <span>Показать все</span>}
-        </label>
-      </div>
-      <div>
-        Общее количество: <span>{countPrice.count}</span>
-      </div>
-      <div>
-        Общая цена: <span>{countPrice.price}</span>
-      </div>
-      <div>Список продуктов:</div>
-      <div className="cart-wrapper">
-        {productsArr.map((product, idx) => (
-          <Cart key={idx}
-            name={product.name}
-            price={product.price}
-            count={product.count} />
+    <div>
+      <input ref={refText} placeholder='напиши текст' />
+      <button onClick={addNewText}>Добавить текст в массив</button>
+      <ul>
+        {addText.map(item => (
+          <li key={item.id}>
+            <h4>{item.id}</h4>
+            <p>{item.text}</p>
+            {item.edit ?
+              <div>
+                <input placeholder='Редактировать' ref={editRef} />
+                <button onClick={() => editText(item.id)}>Сохранить</button>
+              </div>
+              : <button onClick={() => editFlag(item.id)} disabled={item.dis}>Редактировать</button>
+            }
+            <button onClick={() => deleteText(item.id)}>Удалить</button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
-  );
+  )
 }
+
+export default Training
