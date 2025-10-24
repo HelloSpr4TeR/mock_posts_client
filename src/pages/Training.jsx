@@ -1,71 +1,47 @@
-import React, { useRef, useState } from 'react'
-
+import React, { useMemo, useRef, useState } from 'react'
 
 const Training = () => {
-  const refText = useRef(null)
-  const editRef = useRef(null)
-  const [addText, setAddText] = useState([])
+  const [messages, setMessages] = useState([])
+  const refMessage = useRef(null)
 
-  const addNewText = () => {
-    setAddText(prev => [{
+  const sendMessage = () => {
+    setMessages(prev => [{
       id: Date.now(),
-      text: refText.current.value,
-      edit: false,
-      dis: false
+      count: 0,
+      text: refMessage.current.value
     }, ...prev])
-    setTimeout(() => { refText.current.value = '' })
+    setTimeout(() => refMessage.current.value = '')
+    refMessage.current.focus()
   }
 
-  const deleteText = (id) => {
-    setAddText(prev => prev.filter(item => {
-      return item.id !== id
-    }))
-  }
+  const allCount = useMemo(() => messages.reduce((acc, item) => acc + item.count, 0), [messages])
 
-  const editText = (id) => {
-    setAddText(prev => prev.map(item => {
+  const addLike = (id) => {
+    setMessages(prev => prev.map(item => {
       if (item.id === id) {
-        item.text = editRef.current.value
-        editRef.current.value = ''
-        item.edit = !item.edit
+        return { ...item, count: item.count + 1 }
       } else {
-        item.dis = !item.dis
+        return item
       }
-      return item
     }))
-  }
-
-  const editFlag = (id) => {
-    setAddText(prev => prev.map((item => {
-      if (item.id === id) {
-        item.edit = !item.edit
-      } else {
-        item.dis = !item.dis
-      }
-      return item
-    })))
   }
 
   return (
     <div>
-      <input ref={refText} placeholder='напиши текст' />
-      <button onClick={addNewText}>Добавить текст в массив</button>
+      <h3>Likes: {allCount}</h3>
       <ul>
-        {addText.map(item => (
-          <li key={item.id}>
-            <h4>{item.id}</h4>
-            <p>{item.text}</p>
-            {item.edit ?
-              <div>
-                <input placeholder='Редактировать' ref={editRef} />
-                <button onClick={() => editText(item.id)}>Сохранить</button>
-              </div>
-              : <button onClick={() => editFlag(item.id)} disabled={item.dis}>Редактировать</button>
-            }
-            <button onClick={() => deleteText(item.id)}>Удалить</button>
+        {messages.map(message => (
+          <li key={message.id}>
+            <h4>id: {message.id}</h4>
+            <p>Count: {message.count}</p>
+            <p>text: {message.text}</p>
+            <button onClick={() => addLike(message.id)}>Like</button>
           </li>
-        ))}
+        ))
+        }
       </ul>
+      <input placeholder='Написать сообщение' ref={refMessage} />
+      <button onClick={sendMessage}>Send</button>
     </div>
   )
 }
