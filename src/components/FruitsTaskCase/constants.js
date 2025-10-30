@@ -12,6 +12,48 @@ export const PRODUCTS = [
 
 export const FRUITS = ["apple", "banana", "orange"]
 
+export const USERS = [
+    {
+        id: 1,
+        name: "Иван",
+        age: 28,
+        email: "ivan@example.com",
+        isActive: true,
+        role: "admin"
+    },
+    {
+        id: 2,
+        name: "Мария",
+        age: 24,
+        email: "maria@example.com",
+        isActive: false,
+        role: "user"
+    },
+    {
+        id: 3,
+        name: "Алексей",
+        age: 32,
+        email: "aleksei@example.com",
+        isActive: true,
+        role: "moderator"
+    },
+    {
+        id: 4,
+        name: "Ольга",
+        age: 29,
+        email: "olga@example.com",
+        isActive: true,
+        role: "user"
+    },
+    {
+        id: 5,
+        name: "Дмитрий",
+        age: 35,
+        email: "dmitriy@example.com",
+        isActive: false,
+        role: "user"
+    }
+];
 
 // const Training = () => {
 //   const refText = useRef(null)

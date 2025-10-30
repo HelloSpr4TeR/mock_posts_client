@@ -1,48 +1,26 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React from 'react'
+import { USERS } from '../components/FruitsTaskCase/constants'
 
 const Training = () => {
-  const [messages, setMessages] = useState([])
-  const refMessage = useRef(null)
-
-  const sendMessage = () => {
-    setMessages(prev => [{
-      id: Date.now(),
-      count: 0,
-      text: refMessage.current.value
-    }, ...prev])
-    setTimeout(() => refMessage.current.value = '')
-    refMessage.current.focus()
-  }
-
-  const allCount = useMemo(() => messages.reduce((acc, item) => acc + item.count, 0), [messages])
-
-  const addLike = (id) => {
-    setMessages(prev => prev.map(item => {
-      if (item.id === id) {
-        return { ...item, count: item.count + 1 }
-      } else {
-        return item
-      }
-    }))
-  }
+  const data = Object.keys(USERS[0])
 
   return (
-    <div>
-      <h3>Likes: {allCount}</h3>
-      <ul>
-        {messages.map(message => (
-          <li key={message.id}>
-            <h4>id: {message.id}</h4>
-            <p>Count: {message.count}</p>
-            <p>text: {message.text}</p>
-            <button onClick={() => addLike(message.id)}>Like</button>
-          </li>
-        ))
-        }
-      </ul>
-      <input placeholder='Написать сообщение' ref={refMessage} />
-      <button onClick={sendMessage}>Send</button>
-    </div>
+    <table>
+      <thead>
+        <tr>{data.map((item, idx) => (
+          <th key={idx}>{item}</th>
+        ))}</tr>
+      </thead>
+      <tbody>
+        {USERS.map(user => (
+          <tr key={user.id}>
+            {data.map((cur, idx) => (
+              <td key={idx}>{user[cur]}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }
 
