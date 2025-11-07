@@ -60,3 +60,53 @@ const ClockFace = () => {
 };
 
 export default ClockFace;
+
+// import React, { useState } from 'react'
+
+// const Training = () => {
+//   const [user, setUser] = useState({
+//     name: '',
+//     lastName: '',
+//     patrony: '',
+//     checked: false
+//   })
+
+//   const { name, lastName, patrony, checked } = user
+
+//   const dis = !(user.name
+//     && user.lastName
+//     && user.patrony
+//     && user.checked)
+
+//   return (
+//     <>
+//       <div style={{ display: 'flex', gap: '5px' }}>
+//         <input
+//           placeholder='Имя'
+//           value={name}
+//           onChange={e => setUser(prev => ({ ...prev, name: e.target.value }))} />
+//         <input
+//           placeholder='Фамилия'
+//           value={lastName}
+//           onChange={e => setUser(prev => ({ ...prev, lastName: e.target.value }))} />
+//         <input
+//           placeholder='Отчество'
+//           value={patrony}
+//           onChange={e => setUser(prev => ({ ...prev, patrony: e.target.value }))} />
+//         <input type='checkbox'
+//           checked={checked}
+//           onChange={e => setUser(prev => ({ ...prev, checked: e.target.checked }))}
+//         />
+//         <button disabled={dis}>Отправить</button>
+//       </div>
+//       <div>
+//         <p>Имя: {user.name}</p>
+//         <p>Фамилия: {user.lastName}</p>
+//         <p>Отчество: {user.patrony}</p>
+//         <p>Флаг: {user.checked ? 'true' : 'false'}</p>
+//       </div>
+//     </>
+//   )
+// }
+
+// export default Training
