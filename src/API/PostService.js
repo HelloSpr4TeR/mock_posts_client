@@ -21,3 +21,5 @@ export default class PostService {
         return response;
     }
 }
+
+// https://jsonplaceholder.typicode.com/posts?_limit=5&_page=2

@@ -1,116 +1,97 @@
-import React, { useEffect, useState } from 'react'
-
-function getPeople(name, page = 1, options = {}) {
-  return fetch(
-    `http://rickandmortyapi.com/api/character?name=${name}&page=${page}`,
-    options
-  )
-    .then(res => {
-      if (!res.ok) {
-        throw res
-      }
-      return res.json()
-    })
-}
+import React, { useEffect, useRef, useState } from 'react'
 
 const Training = () => {
-  const [name, setName] = useState('')
-  const [characters, setCharacters] = useState([])
-  const [isLoad, setLoad] = useState(false)
+  const [posts, setPosts] = useState([])
   const [error, setError] = useState(null)
-  const [pageCount, setPageCount] = useState(1)
+  const [isLoad, setLoad] = useState(false)
+  const [limit, setLimit] = useState(10)
+  const [curPage, setCurPage] = useState(1)
+  const [num, setNum] = useState('')
+  const totalRef = useRef(null)
 
   useEffect(() => {
-    const controller = new AbortController()
-    const signal = controller.signal
-    setError(null)
-    const fetchCharacters = async (name, page, signal) => {
+    const fetchPosts = async () => {
       setLoad(true)
       try {
-        const data = await getPeople(name, page, signal)
-        setCharacters(data)
-      } catch (e) {
-        if (e.status === 404) {
-          setError('Персонаж не найден')
-        } else if (e.name === 'AbortError') {
-          console.log('Запрос отменен')
+        const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${curPage}`)
+        if (!res.ok) {
+          throw new Error('Ошибка')
         }
+        const totalCount = res.headers.get('x-total-count')
+        totalRef.current = Number(totalCount)
+        const data = await res.json()
+        setPosts(data)
+      } catch (e) {
+        setError(e.message)
       } finally {
         setLoad(false)
       }
     }
 
-    const id = setTimeout(() => {
-      fetchCharacters(name, pageCount, { signal })
-    }, 500)
+    fetchPosts()
+  }, [limit, curPage])
 
-    return () => {
-      controller.abort()
-      clearTimeout(id)
-    }
-  }, [name, pageCount])
-
-  const nextPage = () => {
-    setPageCount(prev => prev + 1)
+  const targetPage = () => {
+    setCurPage(Number(num))
+    setNum('')
   }
 
-  const prevPage = () => {
-    setPageCount(prev => prev - 1)
-  }
-
-  const pagination = (totalPages) => {
+  const pagPages = () => {
     const result = []
-    for (let i = 1; i <= totalPages; i++) {
+    const pagin = Math.ceil(totalRef.current / limit)
+    for (let i = 1; i <= pagin; i++) {
       result.push(i)
     }
+
     return result
   }
 
+
   return (
     <div>
-      <input
-        value={name}
-        placeholder='Найти персонажа'
-        onChange={e => setName(e.target.value)}
-      />
+      <select value={limit} onChange={e => setLimit(Number(e.target.value))}>
+        <option disabled>Выбрать лимит</option>
+        <option value={5}>5</option>
+        <option value={10}>10</option>
+        <option value={25}>25</option>
+        <option value={totalRef.current}>Все</option>
+      </select>
       {error && <div>Ошибка: {error}</div>}
       {isLoad && <div>Загрузка</div>}
       <ul>
-        {!error && characters.results?.map(character => (
-          <li key={character.id}>
-            <p>{character.name}</p>
+        {posts.map(post => (
+          <li key={post.id}>
+            <h3>{post.id}: {post.title}</h3>
+            <p>{post.body}</p>
           </li>
         ))}
       </ul>
-      <div>Всего страниц: {characters?.info?.pages}</div>
-      <div>Текущая страница: {pageCount}</div>
-      <button
-        disabled={pageCount === 1}
-        onClick={prevPage}>Пред страница
-      </button>
-      <button
-        disabled={pageCount === characters?.info?.pages}
-        onClick={nextPage}>След страница
-      </button>
       <div style={{
         display: 'flex',
-        gap: '3px',
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        gap: '5px',
+        marginBottom: '5px'
       }}>
-        {pagination(characters?.info?.pages).map(page => (
+        {pagPages().map(page => (
           <p style={{
-            cursor: 'pointer',
+            border: page === curPage
+              ? '2px solid red'
+              : '1px solid green',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             width: '20px',
-            border: pageCount === page
-              ? '2px solid red'
-              : '1px solid blue'
-          }}
-            key={page} onClick={() => setPageCount(page)}>{page}</p>
+            height: '20px',
+            cursor: 'pointer'
+          }} onClick={() => setCurPage(page)} key={page}>{page}</p>
         ))}
       </div>
+      <input value={num} onChange={e => setNum(e.target.value)} />
+      <button
+        style={{ cursor: 'pointer' }}
+        onClick={targetPage}>
+        Перейти
+      </button>
     </div>
   )
 }
